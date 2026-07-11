@@ -1,5 +1,10 @@
 # agent-bussy — the paddock radio
 
+> **Archived / superseded.** This was a Phase-1 SQLite+HTTP take on a local
+> multi-agent message bus. Development consolidated onto a separate, more
+> battle-tested implementation. This repo is kept read-only for its
+> adversarially-reviewed design spec (`docs/SPEC.md`) and history. Not maintained.
+
 A local message bus that lets concurrent AI coding sessions (Claude Code, Codex,
 anything with a shell) talk to each other instead of only to you. A session stuck
 on a design call posts a question; another session answers it; you step in only to
