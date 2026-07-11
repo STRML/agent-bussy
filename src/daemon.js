@@ -7,7 +7,7 @@ import { ensureHome, busHome } from './config.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 function pidPath() {
-  return join(busHome(), 'busd.pid');
+  return join(busHome(), 'bussy.pid');
 }
 
 // Is a process with this pid alive? signal 0 tests existence without killing.
@@ -34,15 +34,15 @@ export function daemonPid() {
   return null;
 }
 
-// Start busd detached. Refuses if one is already running (pidfile guard).
+// Start bussy detached. Refuses if one is already running (pidfile guard).
 export function startDaemon() {
   ensureHome();
   const existing = daemonPid();
   if (existing) return { started: false, pid: existing, reason: 'already_running' };
 
-  const logPath = join(busHome(), 'busd.log');
+  const logPath = join(busHome(), 'bussy.log');
   const out = openSync(logPath, 'a');
-  const child = spawn(process.execPath, [join(__dirname, 'busd-entry.js')], {
+  const child = spawn(process.execPath, [join(__dirname, 'bussy-entry.js')], {
     detached: true,
     stdio: ['ignore', out, out],
   });

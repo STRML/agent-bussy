@@ -33,13 +33,13 @@ after(async () => {
 
 test('daemon start/status/stop lifecycle + post/read round-trip through the CLI', async () => {
   const start = await bus(['daemon', 'start']);
-  assert.match(start.stdout, /busd started/);
+  assert.match(start.stdout, /bussy started/);
 
   // give the detached daemon a moment to bind
   await new Promise((r) => setTimeout(r, 400));
 
   const status = await bus(['daemon', 'status']);
-  assert.match(status.stdout, /busd running/);
+  assert.match(status.stdout, /bussy running/);
 
   const health = await bus(['health']);
   assert.match(health.stdout, /"ok":true/);
@@ -55,7 +55,7 @@ test('daemon start/status/stop lifecycle + post/read round-trip through the CLI'
   assert.match(threads.stdout, /issue-1\t#1\t1 msgs/);
 
   const stop = await bus(['daemon', 'stop']);
-  assert.match(stop.stdout, /busd stopped/);
+  assert.match(stop.stdout, /bussy stopped/);
 });
 
 test('starting twice is refused by the pidfile guard', async () => {

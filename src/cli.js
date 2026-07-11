@@ -55,13 +55,13 @@ export async function run(argv, { out = console.log, err = console.error } = {})
       const sub = positional[0];
       if (sub === 'start') {
         const r = startDaemon();
-        out(r.started ? `busd started (pid ${r.pid})` : `busd already running (pid ${r.pid})`);
+        out(r.started ? `bussy started (pid ${r.pid})` : `bussy already running (pid ${r.pid})`);
       } else if (sub === 'stop') {
         const r = stopDaemon();
-        out(r.stopped ? `busd stopped (pid ${r.pid})` : 'busd not running');
+        out(r.stopped ? `bussy stopped (pid ${r.pid})` : 'bussy not running');
       } else if (sub === 'status') {
         const r = statusDaemon();
-        out(r.running ? `busd running (pid ${r.pid})` : 'busd not running');
+        out(r.running ? `bussy running (pid ${r.pid})` : 'bussy not running');
       } else {
         err('usage: bus daemon start|stop|status');
         return 2;

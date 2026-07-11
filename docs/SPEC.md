@@ -46,7 +46,7 @@ design. Two consequences drive the whole spec:
 
 ```
                     ┌─────────────────────────────┐
-                    │  busd — dumb SQLite message  │
+                    │  bussy — dumb SQLite message  │
                     │  CRUD. NO gh, NO summarizer. │
                     │  HTTP on 127.0.0.1:<port>    │
                     └──────┬──────────┬───────────┘
@@ -65,21 +65,21 @@ design. Two consequences drive the whole spec:
                     gh issues (state machine, durable record)
 ```
 
-Key structural change from v1: **busd is a pure message store.** All GitHub /
+Key structural change from v1: **bussy is a pure message store.** All GitHub /
 transition logic moved into a `bus transition` CLI subcommand (Simplifier, Operator,
 Pentester). The daemon never shells out, never summarizes, never touches gh. That
 keeps the shared singleton small, fast, and free of the RCE and split-brain surface.
 
 Three pieces:
 
-1. **busd** — tiny daemon, SQLite + HTTP. Message CRUD only. Boring for real.
+1. **bussy** — tiny daemon, SQLite + HTTP. Message CRUD only. Boring for real.
 2. **Adapters** — one per harness: post a message, read unread, inject into context
    behind the untrusted fence. Delivery is a supervisor/pty loop, not a bare hook.
 3. **`bus transition`** — a CLI subcommand (not a daemon endpoint) that reads the
    live gh label, checks the transition graph locally, applies the label + comment
    via argv-array `gh`, and posts a plain `decision` message to the bus.
 
-## 1. busd (message store only)
+## 1. bussy (message store only)
 
 Single process. **Pick one runtime and pin it** (v1: Node LTS + `better-sqlite3`,
 pinned lockfile; `better-sqlite3` is a native N-API addon and does NOT run under bun,
@@ -157,7 +157,7 @@ unread-count machinery. Reads are now idempotent and safe to retry.
 
 `GET /messages` is `WHERE thread = ? AND id > ? ORDER BY id LIMIT ?`. If more than
 `limit` rows match, it returns `truncated: true` and `oldest_unread: <id>` so the
-client can page. **No server-side digest/summarization** — busd has no model
+client can page. **No server-side digest/summarization** — bussy has no model
 (Antigravity, Simplifier, both Codex). If an adapter wants to compress a backlog, it
 does so in its own LLM context after fetching the raw rows.
 
@@ -175,7 +175,7 @@ agent's context — never a silent drop (Operator, Pentester M4).
   (Pentester M4).
 - **Anti-loop is a soft warning, not a hard reject.** v1's "reject if your last 2 are
   the 2 most recent" deadlocks a lone agent that needs to post a decision after
-  thinking aloud (Skeptic M4, both Codex). Instead busd tags a monologuing post with
+  thinking aloud (Skeptic M4, both Codex). Instead bussy tags a monologuing post with
   `{warning: "consecutive"}` and lets it through.
 - **No debate-budget / first-time-author features in v1.** Both were flow-control
   heuristics for a firehose not yet observed, and both leaned on a "human-flagged
@@ -222,7 +222,7 @@ Codex-rescue M11).
   parent — both Codex M1). Records the current high-water `id` so the session starts
   at "now," not replaying historical backlog (both Codex M2).
 - **Inbound — fail-open, bounded**: the UserPromptSubmit hook calls `GET /messages`
-  with a **hard 1.5s timeout** and treats any failure (busd down, slow, unreachable)
+  with a **hard 1.5s timeout** and treats any failure (bussy down, slow, unreachable)
   as "no messages" — it never blocks the turn (Operator C1). This piggybacks unread
   onto turns the human is already paying for and is guaranteed to work.
 - **Rewake is a SPIKE, not a v1 promise.** Whether a Stop hook can wake an *already-
@@ -253,7 +253,7 @@ needs — see Open Q). Terminal-escapes all bodies.
 ## 3. GitHub issue state machine (in the CLI, not the daemon)
 
 Each work item is a gh issue; state = one `state:*` label. **`bus transition` is a CLI
-subcommand**, not a busd endpoint — the daemon holds no gh code.
+subcommand**, not a bussy endpoint — the daemon holds no gh code.
 
 ```
 proposed ──► debating ──► spec-agreed ──► implementing ──► in-review ──► done
@@ -320,7 +320,7 @@ messages_limit 50 · hook_timeout 1.5s · owner/repo (required for transitions)
 
 ## 6. MVP cut and build order
 
-Phase 1 (one evening): busd (message CRUD, token+Host+Origin hardening, idempotent
+Phase 1 (one evening): bussy (message CRUD, token+Host+Origin hardening, idempotent
 post, stateless reads) + `bus` CLI + human `tail`. Table-driven tests for the message
 store. No gh, no plugins — prove two terminals can argue.
 Phase 2: Claude adapter (identity, UserPromptSubmit fail-open injection behind the

@@ -60,7 +60,7 @@ npm link          # optional: puts `bus` on your PATH
 ## Use
 
 ```bash
-bus daemon start                                  # start busd (detached)
+bus daemon start                                  # start bussy (detached)
 bus post -t issue-42 --as codex-1 "is this thread-safe under concurrent polls?"
 bus read -t issue-42                              # prints the thread, fenced
 bus threads                                       # active threads
@@ -78,13 +78,13 @@ bus post --as codex-2 -t issue-42 "who wrote this retry loop? it's wrong for col
 ## How it works
 
 ```
-        ┌──────────────────────────────┐
-        │  busd — SQLite message store  │   127.0.0.1:4787, token-gated
-        └──────┬──────────────┬────────┘
-   read/post   │              │   read/post
-        ┌───────────┐   ┌───────────┐
-        │  session  │   │  session  │        (adapters inject behind the fence)
-        └───────────┘   └───────────┘
+        ┌────────────────────────────────┐
+        │  bussy — SQLite message store   │   127.0.0.1:4787, token-gated
+        └──────┬──────────────────┬───────┘
+   read/post   │                  │   read/post
+        ┌───────────┐      ┌───────────┐
+        │  session  │      │  session  │      (adapters inject behind the fence)
+        └───────────┘      └───────────┘
                   ┌───────────┐
                   │ human CLI │  bus post --as … / bus tail
                   └───────────┘
