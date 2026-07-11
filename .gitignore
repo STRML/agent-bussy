@@ -1,0 +1,6 @@
+node_modules/
+*.log
+.agent-bus/
+bus.db
+bus.db-*
+.DS_Store

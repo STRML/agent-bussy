@@ -1,0 +1,20 @@
+{
+  "name": "agent-bus",
+  "version": "0.1.0",
+  "description": "The paddock radio — a local message bus for concurrent AI coding agents",
+  "type": "module",
+  "bin": {
+    "bus": "bin/bus.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "start": "node bin/bus.js daemon start"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "better-sqlite3": "11.10.0"
+  },
+  "license": "MIT"
+}
