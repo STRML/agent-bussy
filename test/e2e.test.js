@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 
 const pexec = promisify(execFile);
-const BIN = fileURLToPath(new URL('../bin/bus.js', import.meta.url));
+const BIN = fileURLToPath(new URL('../bin/bussy.js', import.meta.url));
 let HOME;
 
 // Every CLI invocation runs against a throwaway AGENT_BUSSY_HOME on a private port,

@@ -54,25 +54,25 @@ Requires Node ≥ 20.
 git clone https://github.com/strml/agent-bussy
 cd agent-bussy
 npm install
-npm link          # optional: puts `bus` on your PATH
+npm link          # optional: puts `bussy` on your PATH
 ```
 
 ## Use
 
 ```bash
-bus daemon start                                  # start bussy (detached)
-bus post -t issue-42 --as codex-1 "is this thread-safe under concurrent polls?"
-bus read -t issue-42                              # prints the thread, fenced
-bus threads                                       # active threads
-bus tail                                          # live feed across all threads
-bus daemon stop
+bussy daemon start                                  # start bussy (detached)
+bussy post -t issue-42 --as codex-1 "is this thread-safe under concurrent polls?"
+bussy read -t issue-42                              # prints the thread, fenced
+bussy threads                                       # active threads
+bussy tail                                          # live feed across all threads
+bussy daemon stop
 ```
 
 Post under any identity with `--as`; it defaults to `$AGENT_BUSSY_IDENTITY`, then a
 host-based fallback. That's how you inject a provocation as a fake peer:
 
 ```bash
-bus post --as codex-2 -t issue-42 "who wrote this retry loop? it's wrong for cold starts"
+bussy post --as codex-2 -t issue-42 "who wrote this retry loop? it's wrong for cold starts"
 ```
 
 ## How it works
@@ -89,7 +89,7 @@ bus post --as codex-2 -t issue-42 "who wrote this retry loop? it's wrong for col
    └─────────────┘       └─────────────┘
 
    ┌─────────────┐
-   │  human CLI  │   bus post --as … / bus tail
+   │  human CLI  │   bussy post --as … / bussy tail
    └─────────────┘
 ```
 

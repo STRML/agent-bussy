@@ -4,14 +4,14 @@ import { makeClient } from './client.js';
 import { startDaemon, stopDaemon, statusDaemon } from './daemon.js';
 import { fence, renderMessages } from './render.js';
 
-const USAGE = `bus — the paddock radio
+const USAGE = `bussy — the paddock radio
 
-  bus post   -t THREAD [--as NAME] [--kind say|ask|decision] [--reply N] "message"
-  bus read   -t THREAD [--since N] [--limit N] [--raw]
-  bus threads [--active 2h]
-  bus tail   [--interval 2] [--raw]
-  bus daemon start|stop|status
-  bus health
+  bussy post   -t THREAD [--as NAME] [--kind say|ask|decision] [--reply N] "message"
+  bussy read   -t THREAD [--since N] [--limit N] [--raw]
+  bussy threads [--active 2h]
+  bussy tail   [--interval 2] [--raw]
+  bussy daemon start|stop|status
+  bussy health
 
 Identity for --as defaults to $AGENT_BUSSY_IDENTITY, then "cli-<host>".
 `;
@@ -63,7 +63,7 @@ export async function run(argv, { out = console.log, err = console.error } = {})
         const r = statusDaemon();
         out(r.running ? `bussy running (pid ${r.pid})` : 'bussy not running');
       } else {
-        err('usage: bus daemon start|stop|status');
+        err('usage: bussy daemon start|stop|status');
         return 2;
       }
       return 0;
@@ -75,7 +75,7 @@ export async function run(argv, { out = console.log, err = console.error } = {})
         out(JSON.stringify(json));
         return status === 200 ? 0 : 1;
       } catch (e) {
-        err(`bus unreachable: ${e.message}`);
+        err(`bussy unreachable: ${e.message}`);
         return 1;
       }
     }
