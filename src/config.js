@@ -3,8 +3,8 @@ import { openSync, closeSync, writeSync, readFileSync, mkdirSync, existsSync } f
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 
-// All magic numbers live here (spec §5). Override the home dir via AGENT_BUS_HOME
-// (used by tests so they never touch the real ~/.agent-bus).
+// All magic numbers live here (spec §5). Override the home dir via AGENT_BUSSY_HOME
+// (used by tests so they never touch the real ~/.agent-bussy).
 export const DEFAULTS = {
   port: 4787,
   host: '127.0.0.1',
@@ -19,7 +19,7 @@ export const DEFAULTS = {
 };
 
 export function busHome() {
-  return process.env.AGENT_BUS_HOME || join(homedir(), '.agent-bus');
+  return process.env.AGENT_BUSSY_HOME || join(homedir(), '.agent-bussy');
 }
 
 // Create the home dir (0700) if missing. Returns the path.

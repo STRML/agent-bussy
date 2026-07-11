@@ -13,7 +13,7 @@ const USAGE = `bus — the paddock radio
   bus daemon start|stop|status
   bus health
 
-Identity for --as defaults to $AGENT_BUS_IDENTITY, then "cli-<host>".
+Identity for --as defaults to $AGENT_BUSSY_IDENTITY, then "cli-<host>".
 `;
 
 // Minimal flag parser: --flag value, -t value, and a trailing positional.
@@ -37,7 +37,7 @@ function parseArgs(argv) {
 }
 
 function identity(flags) {
-  return flags.as || process.env.AGENT_BUS_IDENTITY || `cli-${hostname().split('.')[0]}`;
+  return flags.as || process.env.AGENT_BUSSY_IDENTITY || `cli-${hostname().split('.')[0]}`;
 }
 
 function client() {

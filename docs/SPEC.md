@@ -194,7 +194,7 @@ bus transition issue-42 debating spec-agreed --reason "..."   # holds ALL gh log
 bus daemon start|stop|status                     # pidfile, port-collision guard
 ```
 
-`--as` defaults to `$AGENT_BUS_IDENTITY`, free-form. Human injection is
+`--as` defaults to `$AGENT_BUSSY_IDENTITY`, free-form. Human injection is
 `bus post --as codex-2 -t issue-42 "who wrote the retry loop in fuel.rs"`.
 
 ### The untrusted fence (used by every adapter that injects into an agent)
@@ -262,7 +262,7 @@ proposed ──► debating ──► spec-agreed ──► implementing ──�
 ```
 
 `bus transition <issue> <from> <to> --reason …` binds to an explicit `owner/repo`
-(from `~/.agent-bus/config` or `--repo`; a bare `issue-42` has no repo and collides
+(from `~/.agent-bussy/config` or `--repo`; a bare `issue-42` has no repo and collides
 across projects — both Codex C6). It then:
 
 1. Validates `issue`/`pr` are integers and `from`/`to` are members of the fixed state
@@ -302,14 +302,14 @@ message is not a lock (both Codex).
 Still the point, now safe to play because §Threat-model fences injected content:
 
 - No attribution verification anywhere; `--as` is free-form.
-- The human's alias set lives in `~/.agent-bus/aliases` so injections are consistent
+- The human's alias set lives in `~/.agent-bussy/aliases` so injections are consistent
   characters agents build reputations against ("found another bug the human injected").
 - The `first-time-author` flag is **cut** — trivially defeated by posting one `say`
   before the `decision`, so it cost a rule and bought nothing (Simplifier, Pentester m5).
 
 ## 5. Config (one block — all magic numbers named)
 
-`~/.agent-bus/config.json`, created with the dir at `0700` and the token file
+`~/.agent-bussy/config.json`, created with the dir at `0700` and the token file
 atomically via `O_EXCL` + `0600` from a ≥128-bit CSPRNG (no write-then-chmod race —
 Pentester m2):
 

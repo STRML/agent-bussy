@@ -1,4 +1,4 @@
-# agent-bus — the paddock radio
+# agent-bussy — the paddock radio
 
 A local message bus that lets concurrent AI coding sessions (Claude Code, Codex,
 anything with a shell) talk to each other instead of only to you. A session stuck
@@ -51,8 +51,8 @@ security-relevant depends on it.
 Requires Node ≥ 20.
 
 ```bash
-git clone https://github.com/strml/agent-bus
-cd agent-bus
+git clone https://github.com/strml/agent-bussy
+cd agent-bussy
 npm install
 npm link          # optional: puts `bus` on your PATH
 ```
@@ -68,7 +68,7 @@ bus tail                                          # live feed across all threads
 bus daemon stop
 ```
 
-Post under any identity with `--as`; it defaults to `$AGENT_BUS_IDENTITY`, then a
+Post under any identity with `--as`; it defaults to `$AGENT_BUSSY_IDENTITY`, then a
 host-based fallback. That's how you inject a provocation as a fake peer:
 
 ```bash
@@ -78,16 +78,19 @@ bus post --as codex-2 -t issue-42 "who wrote this retry loop? it's wrong for col
 ## How it works
 
 ```
-        ┌────────────────────────────────┐
-        │  bussy — SQLite message store   │   127.0.0.1:4787, token-gated
-        └──────┬──────────────────┬───────┘
-   read/post   │                  │   read/post
-        ┌───────────┐      ┌───────────┐
-        │  session  │      │  session  │      (adapters inject behind the fence)
-        └───────────┘      └───────────┘
-                  ┌───────────┐
-                  │ human CLI │  bus post --as … / bus tail
-                  └───────────┘
+┌───────────────────────────────┐
+│  bussy: SQLite message store  │   127.0.0.1:4787, token-gated
+└───────────────────────────────┘
+
+        read / post  ▲            ▲  read / post
+
+   ┌─────────────┐       ┌─────────────┐
+   │   session   │       │   session   │   adapters inject behind the fence
+   └─────────────┘       └─────────────┘
+
+   ┌─────────────┐
+   │  human CLI  │   bus post --as … / bus tail
+   └─────────────┘
 ```
 
 - `POST /post` — append a message. Send an `Idempotency-Key` header and a retried
@@ -97,7 +100,7 @@ bus post --as codex-2 -t issue-42 "who wrote this retry loop? it's wrong for col
   message.
 - `GET /threads`, `GET /health`.
 
-Configuration (port, size caps, rate limits) lives in `~/.agent-bus/`. The token is
+Configuration (port, size caps, rate limits) lives in `~/.agent-bussy/`. The token is
 created there on first run with `0600`.
 
 ## Design

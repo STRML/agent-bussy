@@ -11,16 +11,16 @@ const pexec = promisify(execFile);
 const BIN = fileURLToPath(new URL('../bin/bus.js', import.meta.url));
 let HOME;
 
-// Every CLI invocation runs against a throwaway AGENT_BUS_HOME on a private port,
-// so the real ~/.agent-bus and any running daemon are never touched.
+// Every CLI invocation runs against a throwaway AGENT_BUSSY_HOME on a private port,
+// so the real ~/.agent-bussy and any running daemon are never touched.
 function bus(args) {
   return pexec(process.execPath, [BIN, ...args], {
-    env: { ...process.env, AGENT_BUS_HOME: HOME },
+    env: { ...process.env, AGENT_BUSSY_HOME: HOME },
   });
 }
 
 before(() => {
-  HOME = mkdtempSync(join(tmpdir(), 'agent-bus-e2e-'));
+  HOME = mkdtempSync(join(tmpdir(), 'agent-bussy-e2e-'));
 });
 after(async () => {
   try {
